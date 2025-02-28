@@ -1,0 +1,21 @@
+Update the screen section in html
+
+Update the screen section to see both the last button pressed but also
+the previous content. When pressing an opBtn a second time compute the
+result and then make that result the firstNum. 
+
+Need to figure out why operate isn't working properly.
+When pressing a second operator the result is undefined,
+when pressing the equal button it doesn't do anything.  
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Your branch is based on 'origin/main', but the upstream is gone.
+#   (use "git branch --unset-upstream" to fixup)
+#
+# Changes to be committed:
+#	modified:   calculator.css
+#	modified:   calculator.html
+#	modified:   calculator.js
+#

@@ -14,39 +14,79 @@ function divide(a, b) {
     return a / b;
 };
 
-const a = 0;
-const b = 0;
-const operator = '+';
-
 function operate (a, b, operator) {
-    if (operator == '+') {
-        sum(a, b);
-    } else if (operator == '-'){
-        subtraction(a, b);
-    } else if (operator == '*') {
-        multiply(a, b);
+    let result;
+    a = a * 1;
+    b = b * 1;
+    if (operator === '+') {
+        result = sum(a, b);
+    } else if (operator === '-'){
+        result = subtraction(a, b);
+    } else if (operator === '*') {
+        result = multiply(a, b);
     } else {
-        divide(a, b);
+        result = divide(a, b);
     };
+    return result;
 };
 
-const screen = document.querySelector(".screen");
+const operation = document.querySelector(".operation");
+const lastPressed = document.querySelector(".lastPressed");
 const btns = document.querySelectorAll('button');
-const numBtns = document.querySelectorAll('num-btn');
-const opBtns = document.querySelectorAll('op-btn');
-const eqBtn = document.querySelector('eq-btn');
-const clearBtn = document.querySelector('clear-btn');
+const numBtns = document.querySelectorAll('.num-btn');
+const opBtns = document.querySelectorAll('.op-btn');
+const eqBtn = document.querySelector('.eq-btn');
+const clearBtn = document.querySelector('.clear-btn');
 
 function display(input) {
-    screen.innerHTML += `${input}`;
+    lastPressed.innerHTML = `${input}`;
+    operation.innerHTML = `${operators.firstNum}`+`${operators.operator}`+`${operators.secondNum}`;
 };
 
-btns.forEach((btn) => {
-    btn.addEventListener("click", e => display(e.target.textContent));
+const operators = {
+    firstNum: "",
+    secondNum: "",
+    operator: ""
+};
+
+numBtns.forEach((btn) => {
+    btn.addEventListener("click", e => {
+        operators.operator === "" ? operators.firstNum += `${e.target.textContent}` : operators.secondNum += `${e.target.textContent}`;
+        display(e.target.textContent);
+    });
 });
 
-clearBtn.addEventListener("click", firstNum, secondNum = 0, 0);
-eqBtn.addEventListener("click", operate(firstNum, secondNum, operation));
+opBtns.forEach(btn => {
+    btn.addEventListener("click", e => {
+        
+        display(e.target.textContent);
+        if (operators.firstNum === "") {
+            operators.firstNum = 0;
+            operators.operator = e.target.textContent;
+        } else if (operators.secondNum != "") {
+            let result = operate(operators.firstNum, operators.secondNum, operators.operator);
+            lastPressed.innerHTML = result;
+            operators.operator = "";
+            operators.firstNum = `${result}`;
+            operators.secondNum = "";
+        };
+        operators.operator = e.target.textContent;
+    });
+});
+
+eqBtn.addEventListener("click", e => {
+    if (operators.secondNum != "") {
+        let result = operate(operators.firstNum, operators.secondNum, operators.operator);
+        lastPressed.innerHTML = result;
+        [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
+    };
+});
+clearBtn.addEventListener("click", () => {
+    [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
+    operation.innerHTML = "";
+    lastPressed.innerHTML = "";
+});
+
 
 
 
