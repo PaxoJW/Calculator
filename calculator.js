@@ -60,7 +60,7 @@ numBtns.forEach((btn) => {
 opBtns.forEach(btn => {
     btn.addEventListener("click", e => {
         
-        display(e.target.textContent);
+        
         if (operators.firstNum === "") {
             operators.firstNum = 0;
             operators.operator = e.target.textContent;
@@ -72,6 +72,7 @@ opBtns.forEach(btn => {
             operators.secondNum = "";
         };
         operators.operator = `${e.target.textContent}`;
+        display(e.target.textContent);
     });
 });
 
