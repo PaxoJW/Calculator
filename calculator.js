@@ -25,7 +25,7 @@ function operate (a, b, operator) {
     } else if (operator === '*') {
         result = multiply(a, b);
     } else {
-        result = divide(a, b);
+        b === 0 ? alert("Cannot divide by 0!!!") : result = divide(a, b);
     };
     return result;
 };
@@ -37,6 +37,7 @@ const numBtns = document.querySelectorAll('.num-btn');
 const opBtns = document.querySelectorAll('.op-btn');
 const eqBtn = document.querySelector('.eq-btn');
 const clearBtn = document.querySelector('.clear-btn');
+const backSpaceBtn = document.querySelector('.backspace-btn');
 
 function display(input) {
     lastPressed.innerHTML = `${input}`;
@@ -45,8 +46,8 @@ function display(input) {
 
 const operators = {
     firstNum: "",
-    secondNum: "",
-    operator: ""
+    operator: "",
+    secondNum: ""
 };
 
 numBtns.forEach((btn) => {
@@ -70,7 +71,7 @@ opBtns.forEach(btn => {
             operators.firstNum = `${result}`;
             operators.secondNum = "";
         };
-        operators.operator = e.target.textContent;
+        operators.operator = `${e.target.textContent}`;
     });
 });
 
@@ -81,10 +82,24 @@ eqBtn.addEventListener("click", e => {
         [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
     };
 });
+
 clearBtn.addEventListener("click", () => {
     [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
     operation.innerHTML = "";
     lastPressed.innerHTML = "";
+});
+
+
+
+backSpaceBtn.addEventListener("click", () => {
+    let lastEl = Object.values(operators).findLast(i => i != "");
+    console.log(lastEl);
+    let lastElKey = Object.keys(operators).find(key  => operators[key] === lastEl);
+    console.log(Object.keys(operators));
+    console.log(lastElKey);
+    lastEl = lastEl.slice(0,-1);
+    operators[lastElKey] = lastEl;
+    display("");
 });
 
 
