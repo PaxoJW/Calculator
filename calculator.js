@@ -59,8 +59,6 @@ numBtns.forEach((btn) => {
 
 opBtns.forEach(btn => {
     btn.addEventListener("click", e => {
-        
-        
         if (operators.firstNum === "") {
             operators.firstNum = 0;
             operators.operator = e.target.textContent;
@@ -90,8 +88,6 @@ clearBtn.addEventListener("click", () => {
     lastPressed.innerHTML = "";
 });
 
-
-
 backSpaceBtn.addEventListener("click", () => {
     let lastEl = Object.values(operators).findLast(i => i != "");
     console.log(lastEl);
@@ -101,6 +97,52 @@ backSpaceBtn.addEventListener("click", () => {
     lastEl = lastEl.slice(0,-1);
     operators[lastElKey] = lastEl;
     display("");
+});
+
+//keyboard support
+
+// check if the input is a number
+function isNumber(searchValue) {
+    var found = searchValue.search(/^(\d*\.?\d+)$/);
+    //Change to ^(\d*\.?\d+)$ if you don't want the number to end with a . such as 2.
+    //Currently validates .2, 0.2, 2.0 and 2.
+    if(found > -1) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+document.addEventListener("keydown", (e) => {
+    if (isNumber(e.key)) {
+        operators.operator === "" ? operators.firstNum += `${e.key}` : operators.secondNum += `${e.key}`;
+        display(e.key);
+        console.log('1');
+    } else if (e.key == '+'|| '-' || '/' || '*') {
+        if (operators.firstNum === "") {
+            operators.firstNum = 0;
+            operators.operator = e.key;
+        } else if (operators.secondNum != "") {
+            let result = operate(operators.firstNum, operators.secondNum, operators.operator);
+            lastPressed.innerHTML = result;
+            operators.operator = "";
+            operators.firstNum = `${result}`;
+            operators.secondNum = "";
+        };
+        operators.operator = `${e.key}`;
+        display(e.key);
+    } else if (e.code === 0x000D) {
+        if (operators.secondNum != "") {
+            let result = operate(operators.firstNum, operators.secondNum, operators.operator);
+            lastPressed.innerHTML = result;
+            [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
+        };
+    // } else if (e.key == 'Cancel') {
+    //     [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
+    //     operation.innerHTML = "";
+    //     lastPressed.innerHTML = "";
+    };
 });
 
 
