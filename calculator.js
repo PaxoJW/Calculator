@@ -115,11 +115,15 @@ function isNumber(searchValue) {
 }
 
 document.addEventListener("keydown", (e) => {
+    console.log(e.keyCode);
     if (isNumber(e.key)) {
         operators.operator === "" ? operators.firstNum += `${e.key}` : operators.secondNum += `${e.key}`;
         display(e.key);
         console.log('1');
-    } else if (e.key == '+'|| '-' || '/' || '*') {
+    } else if ((e.keyCode == 187 && e.shiftKey) || (e.keyCode == 107) || (e.keyCode == 61 && e.shiftKey)|| // +
+    (e.keyCode == 189 && e.shiftKey == false) || e.keyCode == 107 || // -
+    (e.keyCode == 56 && e.shiftKey) || e.keyCode == 106 || // *
+    (e.keyCode == 191|| e.keyCode == 111)) { // / https://www.toptal.com/developers/keycode; https://codepen.io/thecountgs/pen/JReGNR
         if (operators.firstNum === "") {
             operators.firstNum = 0;
             operators.operator = e.key;
@@ -132,16 +136,25 @@ document.addEventListener("keydown", (e) => {
         };
         operators.operator = `${e.key}`;
         display(e.key);
-    } else if (e.code === 0x000D) {
+    } else if (e.keyCode === 13 || (e.keyCode == 187 && e.shiftKey == false)) { //enter or equal sign 
         if (operators.secondNum != "") {
             let result = operate(operators.firstNum, operators.secondNum, operators.operator);
             lastPressed.innerHTML = result;
             [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
         };
-    // } else if (e.key == 'Cancel') {
-    //     [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
-    //     operation.innerHTML = "";
-    //     lastPressed.innerHTML = "";
+     } else if (e.key == 'Delete') {
+        [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
+        operation.innerHTML = "";
+        lastPressed.innerHTML = "";
+    } else if (e.key == 'Backspace') {
+        let lastEl = Object.values(operators).findLast(i => i != "");
+        console.log(lastEl);
+        let lastElKey = Object.keys(operators).find(key  => operators[key] === lastEl);
+        console.log(Object.keys(operators));
+        console.log(lastElKey);
+        lastEl = lastEl.slice(0,-1);
+        operators[lastElKey] = lastEl;
+        display("");
     };
 });
 
