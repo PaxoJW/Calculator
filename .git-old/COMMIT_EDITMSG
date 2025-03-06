@@ -1,21 +1,16 @@
-Update the screen section in html
+Complete keyboard support
 
-Update the screen section to see both the last button pressed but also
-the previous content. When pressing an opBtn a second time compute the
-result and then make that result the firstNum. 
-
-Need to figure out why operate isn't working properly.
-When pressing a second operator the result is undefined,
-when pressing the equal button it doesn't do anything.  
+Now we can use both buttons and keyboard to make the calculations.
+The missing steps would be to allow thhe user to use floaters,
+round long decimals to not overflow the display 
+and dedicate some time to the UI interface design (CSS).
 # Please enter the commit message for your changes. Lines starting
 # with '#' will be ignored, and an empty message aborts the commit.
 #
 # On branch main
-# Your branch is based on 'origin/main', but the upstream is gone.
-#   (use "git branch --unset-upstream" to fixup)
+# Your branch is ahead of 'origin/main' by 1 commit.
+#   (use "git push" to publish your local commits)
 #
 # Changes to be committed:
-#	modified:   calculator.css
-#	modified:   calculator.html
 #	modified:   calculator.js
 #

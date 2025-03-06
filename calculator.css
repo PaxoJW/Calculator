@@ -1,3 +1,48 @@
+* {
+    margin: 0;
+    background-color: #f3f3f3;
+}
+
 .lastPressed, .operation {
     height: 20px;
+    background-color: #f3f3f3;
 }
+
+.lastPressed, .operation, .numPad {
+    width: auto;
+}
+
+.calculator {
+    width: 50vw;
+    margin:auto;
+    
+}
+
+.numPad {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 0;
+
+}
+
+
+button {
+
+    box-sizing: border-box;
+    font-size: 16px;
+    width: 25%;
+    padding: 16px;
+    border: solid 1px grey;
+    background-color:#f3f3f3;
+    margin: 0;
+    border-radius: 5%;
+}
+
+.num-btn, .dec-btn {
+    background-color: white;
+}
+
+.eq-btn {
+    background-color: rgb(29, 98, 161);
+}
+
