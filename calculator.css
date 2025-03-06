@@ -26,8 +26,7 @@
 }
 
 
-button {
-
+a, button {
     box-sizing: border-box;
     font-size: 16px;
     width: 25%;
@@ -38,11 +37,29 @@ button {
     border-radius: 5%;
 }
 
+a, .fa-github {
+    background-color: aqua;
+}
+
+.dev-btn {
+    box-sizing: border-box;
+    font-size: 16px;
+    width: 100%;
+    padding: 0px;
+    border: 0px;
+    background-color:#f3f3f3;
+    margin: 0;
+    border-radius: 0;
+    cursor: pointer;
+    background-color: aqua; 
+}
+
 .num-btn, .dec-btn {
     background-color: white;
 }
 
-.eq-btn {
+.eq-btn, .fa-equals {
     background-color: rgb(29, 98, 161);
 }
+
 
