@@ -18,15 +18,30 @@ function operate (a, b, operator) {
     let result;
     a = a * 1;
     b = b * 1;
-    if (operator === '+') {
-        result = sum(a, b);
-    } else if (operator === '-'){
-        result = subtraction(a, b);
-    } else if (operator === '*') {
-        result = multiply(a, b);
-    } else {
-        b === 0 ? alert("Cannot divide by 0!!!") : result = divide(a, b);
-    };
+    
+    switch (operator) {
+        case '+':
+            result = sum(a, b);
+            break;
+        case '-':
+            result = subtraction(a, b);
+            break;
+        case '*':
+            result = multiply(a, b);
+            break;
+        case '/':
+            if (b === 0) {
+                alert("Cannot divide by 0!!!");
+                return "Error";
+            }    
+            result = divide(a, b);
+            console.log(result % 1);
+            break;
+        default:
+            console.error("Invalid operator:", operator);
+            return null;
+    }
+
     return result;
 };
 
@@ -59,24 +74,31 @@ numBtns.forEach((btn) => {
 
 opBtns.forEach(btn => {
     btn.addEventListener("click", e => {
+        let operatorSymbol = e.currentTarget.dataset.op;
+        
         if (operators.firstNum === "") {
             operators.firstNum = 0;
-            operators.operator = e.target.textContent;
+            operators.operator = operatorSymbol;
         } else if (operators.secondNum != "") {
             let result = operate(operators.firstNum, operators.secondNum, operators.operator);
-            lastPressed.innerHTML = result;
-            operators.operator = "";
-            operators.firstNum = `${result}`;
-            operators.secondNum = "";
+            if (result !== "Error") {
+                lastPressed.innerHTML = result;
+                operators.operator = "";
+                operators.firstNum = `${result}`;
+                operators.secondNum = "";
+            };
         };
-        operators.operator = `${e.target.textContent}`;
-        display(e.target.textContent);
+        operators.operator = operatorSymbol;
+        display(operatorSymbol);
     });
 });
 
 eqBtn.addEventListener("click", e => {
     if (operators.secondNum != "") {
         let result = operate(operators.firstNum, operators.secondNum, operators.operator);
+        if (result % 1 !== 0) {
+            result = result.toFixed(4);
+        }
         lastPressed.innerHTML = result;
         [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
     };
@@ -121,9 +143,9 @@ document.addEventListener("keydown", (e) => {
         display(e.key);
         console.log('1');
     } else if ((e.keyCode == 187 && e.shiftKey) || (e.keyCode == 107) || (e.keyCode == 61 && e.shiftKey)|| // +
-    (e.keyCode == 189 && e.shiftKey == false) || e.keyCode == 107 || // -
+    (e.keyCode == 189 && e.shiftKey == false) || e.keyCode == 109 || // -
     (e.keyCode == 56 && e.shiftKey) || e.keyCode == 106 || // *
-    (e.keyCode == 191|| e.keyCode == 111)) { // / https://www.toptal.com/developers/keycode; https://codepen.io/thecountgs/pen/JReGNR
+    (e.keyCode == 191 && e.shiftKey == false|| e.keyCode == 111)) { // / https://www.toptal.com/developers/keycode; https://codepen.io/thecountgs/pen/JReGNR
         if (operators.firstNum === "") {
             operators.firstNum = 0;
             operators.operator = e.key;
@@ -136,9 +158,12 @@ document.addEventListener("keydown", (e) => {
         };
         operators.operator = `${e.key}`;
         display(e.key);
-    } else if (e.keyCode === 13 || (e.keyCode == 187 && e.shiftKey == false)) { //enter or equal sign 
+    } else if (e.keyCode == 13 || (e.keyCode == 187 && e.shiftKey == false)) { //enter or equal sign 
         if (operators.secondNum != "") {
             let result = operate(operators.firstNum, operators.secondNum, operators.operator);
+            if (result % 2 !== 0) {
+                result = result.toFixed(4);
+            } 
             lastPressed.innerHTML = result;
             [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
         };
