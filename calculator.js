@@ -81,11 +81,16 @@ opBtns.forEach(btn => {
             operators.operator = operatorSymbol;
         } else if (operators.secondNum != "") {
             let result = operate(operators.firstNum, operators.secondNum, operators.operator);
+            if (result % 1 !== 0 && result !== "Error") {
+                result = result.toFixed(4);
+            }
             if (result !== "Error") {
                 lastPressed.innerHTML = result;
                 operators.operator = "";
                 operators.firstNum = `${result}`;
                 operators.secondNum = "";
+            } else {
+                [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""]
             };
         };
         operators.operator = operatorSymbol;
@@ -96,7 +101,7 @@ opBtns.forEach(btn => {
 eqBtn.addEventListener("click", e => {
     if (operators.secondNum != "") {
         let result = operate(operators.firstNum, operators.secondNum, operators.operator);
-        if (result % 1 !== 0) {
+        if (result % 1 !== 0 && result !== "Error") {
             result = result.toFixed(4);
         }
         lastPressed.innerHTML = result;
@@ -161,13 +166,13 @@ document.addEventListener("keydown", (e) => {
     } else if (e.keyCode == 13 || (e.keyCode == 187 && e.shiftKey == false)) { //enter or equal sign 
         if (operators.secondNum != "") {
             let result = operate(operators.firstNum, operators.secondNum, operators.operator);
-            if (result % 2 !== 0) {
+            if (result % 1 !== 0 && result !== "Error") {
                 result = result.toFixed(4);
-            } 
+            }
             lastPressed.innerHTML = result;
             [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
         };
-     } else if (e.key == 'Delete') {
+    } else if (e.key == 'Delete') {
         [operators.firstNum, operators.secondNum, operators.operator]= ["", "", ""];
         operation.innerHTML = "";
         lastPressed.innerHTML = "";
