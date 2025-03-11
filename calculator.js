@@ -156,6 +156,9 @@ document.addEventListener("keydown", (e) => {
             operators.operator = e.key;
         } else if (operators.secondNum != "") {
             let result = operate(operators.firstNum, operators.secondNum, operators.operator);
+            if (result % 1 !== 0 && result !== "Error") {
+                result = result.toFixed(4);
+            }
             lastPressed.innerHTML = result;
             operators.operator = "";
             operators.firstNum = `${result}`;
